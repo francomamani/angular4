@@ -1,0 +1,24 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-sm-offset-4 col-sm-4 col-md-offset-4 col-md-4 col-lg-4">
+      <form method="POST" role="form">
+        <legend>INICIAR SESION</legend>
+      
+        <div class="form-group">
+          <label for="correo">Correo</label>
+          <input type="email" class="form-control" id="correo" placeholder="ejemplo@gmail.com" required autofocus>
+        </div>
+        <div class="form-group">
+          <label for="clave">Clave</label>
+          <input type="password" 
+                 class="form-control"
+                 pattern="\w{8,}" 
+                 title="Mayusculas, minusculas, numeros y _" 
+                 id="clave" placeholder="*******" required>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Iniciar sesion</button>
+      </form>
+    </div>
+  </div>  
+</div>

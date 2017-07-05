@@ -1,0 +1,95 @@
+<div class="container">
+	<div class="row">
+		<div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+		<form #personalForm="ngForm" role="form" *ngIf="edicion == false">
+				<legend>REGISTRO DE PERSONAL</legend>
+				<div class="form-group">
+					<label for="nombres">Nombres</label>
+					<input type="text" class="form-control" id="nombres" 
+					[(ngModel)]="personal.nombres" name="nombres" required autofocus>
+				</div>
+				<div class="form-group">
+					<label for="apellidos">Apellidos</label>
+					<input type="text" class="form-control" id="apellidos" 
+					[(ngModel)]="personal.apellidos"
+					name="apellidos" required>
+				</div>
+				<div class="form-group">
+					<label for="cargo">Cargo</label>
+					<select [(ngModel)]="personal.cargo" 
+							name="cargo" 
+							id="cargo" 
+							class="form-control">
+						<option value="{{cargo.value}}" *ngFor="let cargo of cargos">
+							{{ cargo.nombre }}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="carnet">Carnet</label>
+					<input type="text" class="form-control" id="carnet" 
+					[(ngModel)]="personal.carnet" name="carnet" required>
+				</div>			
+			
+				<button type="submit" (click)="registrar(personal)" class="btn btn-primary">GUARDAR</button>
+			</form>
+			<form role="form" *ngIf="edicion == true">
+				<legend>EDITAR PERSONAL</legend>
+				<div class="form-group">
+					<label for="nombres">Nombres</label>
+					<input type="text" class="form-control" id="nombres" 
+					[(ngModel)]="personalSeleccionado.nombres" name="nombres" required autofocus>
+				</div>
+				<div class="form-group">
+					<label for="apellidos">Apellidos</label>
+					<input type="text" class="form-control" id="apellidos" 
+					[(ngModel)]="personalSeleccionado.apellidos"
+					name="apellidos" required>
+				</div>
+				<div class="form-group">
+					<label for="cargo">Cargo</label>
+					<select [(ngModel)]="personalSeleccionado.cargo" 
+							name="cargo" 
+							id="cargo" 
+							class="form-control">
+						<option value="{{cargo.value}}" *ngFor="let cargo of cargos">
+							{{ cargo.nombre }}
+						</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<label for="carnet">Carnet</label>
+					<input type="text" class="form-control" id="carnet" 
+					[(ngModel)]="personalSeleccionado.carnet" name="carnet" required>
+				</div>			
+			
+				<button type="submit" (click)="actualizar(personalSeleccionado, $index)" class="btn btn-success">ACTUALIZAR</button>
+			</form>
+		</div>
+		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+			<div class="table-responsive">
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Nombres</th>
+							<th>Apellidos</th>
+							<th>Cargo</th>
+							<th>Carnet</th>
+							<th>Opciones</th>							
+						</tr>
+					</thead>
+					<tbody>
+						<tr *ngFor="let p of personales">
+							<td>{{ p.nombres }}</td>
+							<td>{{ p.apellidos }}</td>
+							<td>{{ p.cargo }}</td>
+							<td>{{ p.carnet }}</td>
+							<td><button class="btn btn-success btn-sm" 
+								(click)="editar(p)">Actualizar</button></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
