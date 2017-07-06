@@ -14,8 +14,10 @@ import { PersonalService } from './personal.service';
 })
 export class PersonalComponent implements OnInit {
 
+  index:number=null;
   personal:Personal = {
-  	nombres: "Juan",
+  	id: 0,
+    nombres: "Juan",
   	apellidos: "Mendoza",
   	cargo: "Soporte Tecnico",
   	carnet: "7275047-OR"   	
@@ -24,7 +26,9 @@ export class PersonalComponent implements OnInit {
   	{ nombre: "Auxiliar Tecnico", value: "auxiliar_tecnico"},
   	{ nombre: "Soporte Tecnico", value: "soporte_tecnico"}
   ];
-  personales: Personal[];//lista de personales
+  //personales: Personal[];//lista de personales
+  personales: Array<Personal>;
+  
   personalSeleccionado: Personal;
   edicion = false;
   constructor(private personalService: PersonalService) { }
@@ -35,14 +39,30 @@ export class PersonalComponent implements OnInit {
   }
 
   registrar(personal: Personal):void{
-  	this.personales.push(personal);//agrega un personal a la lista de personales
+    this.personalService.registrar(personal).subscribe(registroNuevo => {
+      this.personales.unshift(registroNuevo);
+    });
+
   }
-  editar(personal: Personal):void{
+  editar(personal: Personal, index):void{
   	this.personalSeleccionado = personal;
   	console.log(this.personalSeleccionado);
   	this.edicion = true;
+    this.index = index;
   }
-  actualizar(personalSeleccionado:Personal, $index):void{
-  	this.personales.splice(1, $index, personalSeleccionado);
+  actualizar(personalSeleccionado:Personal):void{
+    this.personalService
+        .actualizar(personalSeleccionado)
+        .subscribe(registroActualizado => {
+          this.personales.splice(this.index, 1, registroActualizado)
+        });
+  }
+  eliminar(personalSeleccionado:Personal, index){
+    this.personalService
+        .eliminar(personalSeleccionado)
+        .subscribe(registroActualizado => {
+            this.personales.splice(index, 1);
+            console.log(registroActualizado);
+        });
   }
 }

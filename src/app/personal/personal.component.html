@@ -31,9 +31,9 @@
 					[(ngModel)]="personal.carnet" name="carnet" required>
 				</div>			
 			
-				<button type="submit" (click)="registrar(personal)" class="btn btn-primary">GUARDAR</button>
+				<button type="submit" (click)="registrar(personal);personalForm.reset()" class="btn btn-primary">GUARDAR</button>
 			</form>
-			<form role="form" *ngIf="edicion == true">
+			<form  #personalFormEdit = "ngForm" role="form" *ngIf="edicion == true">
 				<legend>EDITAR PERSONAL</legend>
 				<div class="form-group">
 					<label for="nombres">Nombres</label>
@@ -63,14 +63,20 @@
 					[(ngModel)]="personalSeleccionado.carnet" name="carnet" required>
 				</div>			
 			
-				<button type="submit" (click)="actualizar(personalSeleccionado, $index)" class="btn btn-success">ACTUALIZAR</button>
+				<button type="submit" (click)="actualizar(personalSeleccionado);personalFormEdit.reset()" class="btn btn-success">ACTUALIZAR</button>
 			</form>
 		</div>
 		<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+			<div class="row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+					<input type="search" class="form-control" placeholder="Buscar" [(ngModel)]="busqueda">
+				</div>
+			</div>
 			<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
 						<tr>
+							<th>ID</th>
 							<th>Nombres</th>
 							<th>Apellidos</th>
 							<th>Cargo</th>
@@ -79,13 +85,16 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let p of personales">
+ 						<tr *ngFor="let p of personales | filter: busqueda; let i = index">
+							<td>{{ p.id }}</td>
 							<td>{{ p.nombres }}</td>
 							<td>{{ p.apellidos }}</td>
 							<td>{{ p.cargo }}</td>
 							<td>{{ p.carnet }}</td>
-							<td><button class="btn btn-success btn-sm" 
-								(click)="editar(p)">Actualizar</button></td>
+							<td>
+								<button class="btn btn-success btn-sm" (click)="editar(p,i)">Actualizar</button>
+								<button class="btn btn-danger btn-sm" (click)="eliminar(p, i)">Eliminar</button>
+							</td>
 						</tr>
 					</tbody>
 				</table>

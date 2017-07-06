@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { FormsModule } from '@angular/forms';
 import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
@@ -25,6 +26,7 @@ const appRutas: Routes = [
     BrowserModule,
     HttpModule,
     FormsModule,
+    Ng2SearchPipeModule,
 	  RouterModule.forRoot(appRutas) 
 	],
   providers: [],
